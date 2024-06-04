@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-// import { supabase } from "../plugins/supabase";
+import { supabase } from "../plugins/supabase";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -93,7 +93,6 @@ const form = {
 };
 
 const onLogin = async () => {
-  /*
   if (!supabase.ready) {
     throw new Error("Supabase has not been initialized yet");
   }
@@ -105,6 +104,5 @@ const onLogin = async () => {
   } catch (error) {
     errorMessage.value = (error as any).message || "unknown failure";
   }
-  */
 };
 </script>
