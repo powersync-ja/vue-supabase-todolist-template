@@ -15,13 +15,13 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0
   '@powersync/vue':
-    specifier: ^0.1.4
-    version: 0.1.5(@powersync/common@1.9.0)(vue@3.4.27)
+    specifier: ^0.1.6
+    version: 0.1.6(@powersync/common@1.10.0)(vue@3.4.27)
   '@powersync/web':
-    specifier: ^0.7.0
-    version: 0.7.0(@journeyapps/wa-sqlite@0.2.0)(@powersync/common@1.9.0)
+    specifier: ^1.0.0
+    version: 1.0.0(@journeyapps/wa-sqlite@0.2.0)(@powersync/common@1.10.0)
   '@supabase/supabase-js':
-    specifier: ^2.43.2
+    specifier: ^2.43.4
     version: 2.43.4
   js-logger:
     specifier: ^1.6.1
@@ -367,8 +367,8 @@ packages:
     dev: true
     optional: true
 
-  /@powersync/common@1.9.0:
-    resolution: {integrity: sha512-eVkvbZAtmp4SH4cjHPrIKtWZWw9hL70Kv/yQCg6H0ZVLX2SRm8wMt7sw8f1T0UrvCeyEQM564Kjd3eO4RBv6Yw==}
+  /@powersync/common@1.10.0:
+    resolution: {integrity: sha512-DyC3h+bGIhJdMwCFTHKHI1V1eHIY7Ua6aFypOpHBSSH9DniaUJvEL+GYcFfVwoVYeMFGxvvVwikkPb08+INNFA==}
     dependencies:
       async-mutex: 0.4.1
       buffer: 6.0.3
@@ -383,24 +383,24 @@ packages:
       - encoding
     dev: false
 
-  /@powersync/vue@0.1.5(@powersync/common@1.9.0)(vue@3.4.27):
-    resolution: {integrity: sha512-2ar2M0eWyOZKa2b6KMVyTAjDx1RwetBUm3MSq56tvY2OpGqDR2Aaqi17Gae7hhNQL6LXQRy1YHOdMH55gwQRSg==}
+  /@powersync/vue@0.1.6(@powersync/common@1.10.0)(vue@3.4.27):
+    resolution: {integrity: sha512-twtU3DRB8lnimp3PGAcDuoK7rUH/i+lns1fJulUh+eu3r8seWnoZ/9mcU6260AinVEEkAOHEMi8ViF4EiVSIAg==}
     peerDependencies:
-      '@powersync/common': ^1.9.0
+      '@powersync/common': ^1.10.0
       vue: '*'
     dependencies:
-      '@powersync/common': 1.9.0
+      '@powersync/common': 1.10.0
       vue: 3.4.27(typescript@5.4.5)
     dev: false
 
-  /@powersync/web@0.7.0(@journeyapps/wa-sqlite@0.2.0)(@powersync/common@1.9.0):
-    resolution: {integrity: sha512-b5BXgiouGKbYIRbLVM7PyPo1XmYshFE/9l3Xdnf/4nKLgJC5VaZP0zKIEXFE2ECdeapC4+/7WXRGKHRRIr5B4A==}
+  /@powersync/web@1.0.0(@journeyapps/wa-sqlite@0.2.0)(@powersync/common@1.10.0):
+    resolution: {integrity: sha512-n5bJs2HxiHGEqudUifiAW4v0ouLiHhF/r1Bxq2VAcYZJoiuAp3WXxmNws+S9pixrDiYii7N5mpBS/7bdYMuA7Q==}
     peerDependencies:
       '@journeyapps/wa-sqlite': ~0.2.0
-      '@powersync/common': '>=1.9.0'
+      '@powersync/common': ^1.10.0
     dependencies:
       '@journeyapps/wa-sqlite': 0.2.0
-      '@powersync/common': 1.9.0
+      '@powersync/common': 1.10.0
       async-mutex: 0.4.1
       bson: 6.7.0
       buffer: 6.0.3

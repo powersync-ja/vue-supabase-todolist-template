@@ -71,8 +71,8 @@
 
 // TodoList.vue
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { usePowerSync, useStatus } from "@powersync/vue";
+import { ref } from "vue";
+import { usePowerSync, useQuery, useStatus } from "@powersync/vue";
 import { TodoRecord } from "../library/AppSchema";
 import { supabase } from "../plugins/supabase";
 import { useRouter } from "vue-router";
@@ -101,7 +101,8 @@ if (!supabase.ready) {
 type Todo = TodoRecord;
 
 const newTodo = ref<string>("");
-const todos = ref<Todo[]>([]);
+const { data: todos } = useQuery<Todo>("SELECT * from todos");
+
 const logout = async () => {
   await supabase.client.auth.signOut();
 };
@@ -111,7 +112,6 @@ const addTodo = async () => {
       "INSERT INTO todos (id, created_at, description, completed) VALUES (uuid(), datetime(), ?, ?) RETURNING *",
       [newTodo.value, 0]
     );
-    todos.value = await powersync.value.getAll("SELECT * from todos");
     newTodo.value = "";
   }
 };
@@ -122,16 +122,10 @@ const updateTodo = async (index: number) => {
     !todo.completed,
     todo.id,
   ]);
-  todos.value = await powersync.value.getAll("SELECT * from todos");
 };
 
 const removeTodo = async (index: number) => {
   const todo = todos.value[index];
   await powersync.value.execute("DELETE FROM todos WHERE id = ?", [todo.id]);
-  todos.value = await powersync.value.getAll("SELECT * from todos");
 };
-
-onMounted(async () => {
-  todos.value = await powersync.value.getAll("SELECT * from todos");
-});
 </script>
