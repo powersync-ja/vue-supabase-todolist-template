@@ -428,7 +428,7 @@ Update the `App.vue` file to initialize PowerSync and Supabase when the app is m
 <script setup lang="ts">
 import { onMounted } from "vue";
 import Logger from "js-logger";
-import { powerSync } from "./plugins/powerSync";
+import { powerSync } from "./plugins/powersync";
 import { supabase } from "./plugins/supabase";
 
 Logger.useDefaults();
@@ -454,18 +454,17 @@ Replace the script section with the following code:
 As you can see, we've defined a type for the Todo item and updated the methods to interact with the PowerSync database.
 
 - The `usePowerSync` composable is used to access the PowerSync instance. The `execute` method is used to execute SQL queries,
-- The `getAll` method is used to retrieve all records from the database.
-- The `onMounted` lifecycle hook is used to fetch all todos when the component is mounted.
+- The `useQuery` composable is used to have a live view of a certain SQL query from the database, if the underlying data changes the query will automatically re-execute. It's stored in the `todos` ref.
+- The `newTodo` ref is used to store the text of the new todo.
+- The `todos` ref is automatically updated after adding, updating, or removing todos from the database.
 - The `addTodo`, `updateTodo`, and `removeTodo` methods are used to add, update, and remove todos from the database, respectively.
-- The `todos` ref is used to store the list of todos, and the `newTodo` ref is used to store the text of the new todo.
-- The `todos` ref is updated after adding, updating, or removing todos from the database.
 - The `useRouter` composable is used to navigate between routes. If the user is not logged in, they are redirected to the login page.
 
 ```typescript
 // TodoList.vue
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { usePowerSync } from "@powersync/vue";
+import { ref } from "vue";
+import { usePowerSync, useQuery } from "@powersync/vue";
 import { TodoRecord } from "../library/AppSchema";
 import { supabase } from "../plugins/supabase";
 import { useRouter } from "vue-router";
@@ -493,7 +492,7 @@ if (!supabase.ready) {
 type Todo = TodoRecord;
 
 const newTodo = ref<string>("");
-const todos = ref<Todo[]>([]);
+const { data: todos } = useQuery<Todo>("SELECT * from todos");
 
 const addTodo = async () => {
   if (newTodo.value.trim()) {
@@ -501,7 +500,6 @@ const addTodo = async () => {
       "INSERT INTO todos (id, created_at, description, completed) VALUES (uuid(), datetime(), ?, ?) RETURNING *",
       [newTodo.value, 0]
     );
-    todos.value = await powersync.value.getAll("SELECT * from todos");
     newTodo.value = "";
   }
 };
@@ -512,18 +510,12 @@ const updateTodo = async (index: number) => {
     !todo.completed,
     todo.id,
   ]);
-  todos.value = await powersync.value.getAll("SELECT * from todos");
 };
 
 const removeTodo = async (index: number) => {
   const todo = todos.value[index];
   await powersync.value.execute("DELETE FROM todos WHERE id = ?", [todo.id]);
-  todos.value = await powersync.value.getAll("SELECT * from todos");
 };
-
-onMounted(async () => {
-  todos.value = await powersync.value.getAll("SELECT * from todos");
-});
 </script>
 
 ```
