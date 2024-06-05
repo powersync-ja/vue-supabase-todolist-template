@@ -1,9 +1,8 @@
 <template>
   <div class="container mx-auto my-10 px-4">
-    <!-- uncomment the following code to use the status object  
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-md font-semibold text-gray-900">
-  Status: {{ status.connected ? "Connected" : "Disconnected" }}
+        Status: {{ status.connected ? "Connected" : "Disconnected" }}
       </h1>
       <button
         @click="logout()"
@@ -12,7 +11,7 @@
         Logout
       </button>
     </div>
-    -->
+
     <h1
       class="text-center text-3xl md:text-4xl font-semibold text-gray-900 mb-6"
     >
@@ -70,35 +69,66 @@
   </div>
 </template>
 
+// TodoList.vue
 <script setup lang="ts">
 import { ref } from "vue";
+import { usePowerSync, useQuery, useStatus } from "@powersync/vue";
+import { TodoRecord } from "../library/AppSchema";
+import { supabase } from "../plugins/supabase";
+import { useRouter } from "vue-router";
 
-// Define a type for the Todo item
-interface Todo {
-  id: number;
-  description: string;
-  completed: number;
+const powersync = usePowerSync();
+const status = useStatus();
+const router = useRouter();
+if (!supabase.ready) {
+  supabase.registerListener({
+    initialized: () => {
+      /**
+       * Redirect if on the entry view
+       */
+      if (supabase.currentSession) {
+        router.push("/");
+      } else {
+        router.push("/login");
+      }
+    },
+  });
+} else {
+  router.push("/");
 }
 
-const newTodo = ref<string>("");
-const todos = ref<Todo[]>([]);
+// Define a type for the Todo item
+type Todo = TodoRecord;
 
-const addTodo = () => {
-  if (newTodo.value.trim() !== "") {
-    todos.value.push({
-      id: todos.value.length + 1,
-      description: newTodo.value,
-      completed: 0,
-    });
+const newTodo = ref<string>("");
+const { data: todos } = useQuery<Todo>("SELECT * from todos");
+
+const logout = async () => {
+  await powersync.value.disconnectAndClear();
+  await supabase.client.auth.signOut();
+  router.push("/login");
+};
+
+const addTodo = async () => {
+  if (newTodo.value.trim()) {
+    await powersync.value.execute(
+      "INSERT INTO todos (id, created_at, description, completed) VALUES (uuid(), datetime(), ?, ?) RETURNING *",
+      [newTodo.value, 0]
+    );
     newTodo.value = "";
   }
 };
 
 const updateTodo = async (index: number) => {
-  todos.value[index].completed = todos.value[index].completed === 1 ? 0 : 1;
+  const todo = todos.value[index];
+  await powersync.value.execute("UPDATE todos SET completed = ? WHERE id = ?", [
+    !todo.completed,
+    todo.id,
+  ]);
 };
 
-const removeTodo = (index: number) => {
-  todos.value.splice(index, 1);
+const removeTodo = async (index: number) => {
+  const todo = todos.value[index];
+  await powersync.value.execute("DELETE FROM todos WHERE id = ?", [todo.id]);
 };
 </script>
