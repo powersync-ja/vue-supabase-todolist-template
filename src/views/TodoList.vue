@@ -104,8 +104,11 @@ const newTodo = ref<string>("");
 const { data: todos } = useQuery<Todo>("SELECT * from todos");
 
 const logout = async () => {
+  await powersync.value.disconnectAndClear();
   await supabase.client.auth.signOut();
+  router.push("/login");
 };
+
 const addTodo = async () => {
   if (newTodo.value.trim()) {
     await powersync.value.execute(
