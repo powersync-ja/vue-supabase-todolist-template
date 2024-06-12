@@ -1,12 +1,12 @@
 # Vue Tutorial: Building an Offline-First ToDo App with Supabase and PowerSync
 
-Crafting an offline-first Vue app ensures seamless user experiences by leveraging a local in-app database. This tutorial will guide you through the process of constructing an offline-first ToDo app using Vue, Supabase, and PowerSync. You can expect to allocate approximately 30 to 45 minutes to complete this tutorial.
+Local-first Vue apps enable instantly reactive user experiences by leveraging a local in-app database. This tutorial will guide you through the process of constructing an offline-first ToDo app using Vue, Supabase, and PowerSync. You can expect to allocate approximately 30 to 45 minutes to complete this tutorial.
 
-![image](./img/flow.png)
+![Supabase-PowerSync-Vue-architecture-diagram-transparent](https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/f7a0f680-b455-4ac0-af5d-791a3d466663)
 
 ## Prerequisites
 
-Before diving in, ensure you have active accounts with both Supabase and PowerSync. If you haven't signed up yet, you can initiate your journey with PowerSync for free [here](https://accounts.journeyapps.com/portal/free-trial?powersync=true&__hstc=156206116.8d466f99b6f735f148d11d10c8ec3b93.1714389194534.1714415338564.1714976498368.4&__hssc=156206116.1.1714976498368&__hsfp=3997489276), and with Supabase [here](https://supabase.com/dashboard/sign-in?). Additionally, make sure you have Vue set up on your system.
+Before diving in, ensure you have active accounts with both Supabase and PowerSync. If you haven't signed up yet, do not worry, you can get started for free [here](https://accounts.journeyapps.com/portal/free-trial?powersync=true&__hstc=156206116.8d466f99b6f735f148d11d10c8ec3b93.1714389194534.1714415338564.1714976498368.4&__hssc=156206116.1.1714976498368&__hsfp=3997489276), and with Supabase [here](https://supabase.com/dashboard/sign-in?). Additionally, make sure you have Vue set up on your system.
 
 We will cover the following steps:
 
@@ -53,9 +53,10 @@ create publication powersync for table public.todos
 
 1. **Create a New Instance:**
 
+
    - Navigate to the PowerSync dashboard Project tree.
    - Click on "Create new instance".
-     ![image](./img/create-instance.png)
+     <img width="296" alt="project-tree" src="https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/a8c920c2-c22a-4ef4-b882-6485f409dca5">
    - Provide a name for your instance, e.g., "Supabase Testing".
 
 2. **Adjust Cloud Region (Optional):**
