@@ -56,6 +56,7 @@ create publication powersync for table public.todos
 
    - Navigate to the PowerSync dashboard Project tree.
    - Click on "Create new instance".
+     
      <img width="296" alt="project-tree" src="https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/a8c920c2-c22a-4ef4-b882-6485f409dca5">
    - Provide a name for your instance, e.g., "Supabase Testing".
 
@@ -102,11 +103,12 @@ bucket_definitions:
       # Sync all todos
       - SELECT * FROM todos
 ```
+So it looks like this:
 
-![image](./img/sync-rules.png)
+<img width="833" alt="sync-rules" src="https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/642d2832-0b00-47a2-9130-ace4f8a80d5c">
 
-3. Click **"Validate sync rules"** to ensure the syntax is correct.
-4. In the top right corner, click **"Deploy sync rules"** and select the instance you created earlier.
+3. In the top right corner of the sunc-rules panel, click **"Validate"** to ensure the syntax is correct.
+4. Then, click **"Deploy sync rules"** and select the instance you created earlier.
 5. Confirm in the dialog and wait for the deployment to complete.
 
 ## 3. Set Up the Vue Project
