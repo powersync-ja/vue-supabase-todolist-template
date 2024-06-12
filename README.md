@@ -446,9 +446,11 @@ onMounted(async () => {
 </template>
 ```
 
-### 4.7. Update the TodoList.vue File
+### 4.8. Update the TodoList.vue File
 
 Update the `TodoList.vue` file to use the PowerSync SDK for managing todos.
+Uncomment the code blocks in the HTML template section.
+
 Replace the script section with the following code:
 
 As you can see, we've defined a type for the Todo item and updated the methods to interact with the PowerSync database.
@@ -464,7 +466,7 @@ As you can see, we've defined a type for the Todo item and updated the methods t
 // TodoList.vue
 <script setup lang="ts">
 import { ref } from "vue";
-import { usePowerSync, useQuery } from "@powersync/vue";
+import { usePowerSync, useQuery, useStatus } from "@powersync/vue";
 import { TodoRecord } from "../library/AppSchema";
 import { supabase } from "../plugins/supabase";
 import { useRouter } from "vue-router";
@@ -487,6 +489,16 @@ if (!supabase.ready) {
 } else {
   router.push("/");
 }
+
+const status = useStatus();
+
+// Log out and return to the log in screen
+// Clears the local database
+const logout = async () => {
+  await powersync.value.disconnectAndClear();
+  await supabase.client.auth.signOut();
+  router.push("/login");
+};
 
 // Define a type for the Todo item
 type Todo = TodoRecord;
@@ -520,11 +532,11 @@ const removeTodo = async (index: number) => {
 
 ```
 
-### 4.8. Go to Login.vue and Register.vue and uncomment the commented code and code blocks
+### 4.9. Go to Login.vue and Register.vue and uncomment the commented code and code blocks
 
 In the `Login.vue` and `Register.vue` files, uncomment the code blocks that handle the login and registration logic.
 
-### 4.9. Update the Vite Config
+### 4.10. Update the Vite Config
 
 Update the `vite.config.ts` file to include the following configuration:
 
@@ -598,3 +610,7 @@ pnpm serve
 5. Verify that the todos are synchronized and shown in the supabase dashboard.
 
 Congratulations! You have successfully built an offline-first ToDo app using Vue, Supabase, and PowerSync.
+
+## Complete Implementation Available
+
+An example with everything above implemented is available on the `completed` branch [here](https://github.com/powersync-ja/vue-supabase-todolist-template/tree/completed).
