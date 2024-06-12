@@ -1,6 +1,6 @@
-# Vue Tutorial: Building an Offline-First ToDo App with Supabase and PowerSync
+# Vue Tutorial: Offline-First ToDo App with Supabase and PowerSync
 
-Local-first Vue apps enable instantly reactive user experiences by leveraging a local in-app database. This tutorial will guide you through the process of constructing an offline-first ToDo app using Vue, Supabase, and PowerSync. You can expect to allocate approximately 30 to 45 minutes to complete this tutorial.
+Offline-first Vue apps enable instantly reactive user experiences by leveraging a local in-app database. This tutorial will guide you through the process of constructing an offline-first ToDo app using Vue, Supabase, and PowerSync. Allocate approximately 30 to 45 minutes to complete this tutorial.
 
 ![Supabase-PowerSync-Vue-architecture-diagram-transparent](https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/f7a0f680-b455-4ac0-af5d-791a3d466663)
 
@@ -107,7 +107,7 @@ So it looks like this:
 
 <img width="833" alt="sync-rules" src="https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/642d2832-0b00-47a2-9130-ace4f8a80d5c">
 
-3. In the top right corner of the sunc-rules panel, click **"Validate"** to ensure the syntax is correct.
+3. In the top right corner of the sync-rules panel, click **"Validate"** to ensure the syntax is correct.
 4. Then, click **"Deploy sync rules"** and select the instance you created earlier.
 5. Confirm in the dialog and wait for the deployment to complete.
 
@@ -345,7 +345,7 @@ export class SupabaseConnector
 
 ### 4.2. Create a Supabase Plugin
 
-In the folder named `plugins` in the `src` directory and create a file named `supabase.ts`.
+In the folder named `plugins` in the `src` directory, create a file named `supabase.ts`.
 
 ```typescript
 // src/plugins/supabase.ts
@@ -362,7 +362,7 @@ pnpm install @powersync/web @powersync/vue @journeyapps/wa-sqlite
 
 ### 4.4. Create a PowerSync Vue Plugin
 
-In the folder named `plugins` in the `src` directory and create a file named `powersync.ts`.
+In the folder named `plugins` in the `src` directory, create a file named `powersync.ts`.
 
 ```typescript
 // src/plugins/powersync.ts
@@ -380,7 +380,7 @@ export const powerSyncPlugin = createPowerSyncPlugin({ database: powerSync });
 
 ### 4.5. Create a PowerSync Database Schema
 
-In the folder named `library` in the `src` directory and create a file named `AppSchema.ts`.
+In the folder named `library` in the `src` directory, create a file named `AppSchema.ts`.
 
 ```typescript
 // src/library/AppSchema.ts
@@ -456,15 +456,6 @@ Uncomment the code blocks in the HTML template section.
 
 Replace the script section with the following code:
 
-As you can see, we've defined a type for the Todo item and updated the methods to interact with the PowerSync database.
-
-- The `usePowerSync` composable is used to access the PowerSync instance. The `execute` method is used to execute SQL queries,
-- The `useQuery` composable is used to have a live view of a certain SQL query from the database, if the underlying data changes the query will automatically re-execute. It's stored in the `todos` ref.
-- The `newTodo` ref is used to store the text of the new todo.
-- The `todos` ref is automatically updated after adding, updating, or removing todos from the database.
-- The `addTodo`, `updateTodo`, and `removeTodo` methods are used to add, update, and remove todos from the database, respectively.
-- The `useRouter` composable is used to navigate between routes. If the user is not logged in, they are redirected to the login page.
-
 ```typescript
 // TodoList.vue
 <script setup lang="ts">
@@ -534,6 +525,15 @@ const removeTodo = async (index: number) => {
 </script>
 
 ```
+
+As you can see, we've defined a type for the Todo item and updated the methods to interact with the PowerSync database.
+
+- The `usePowerSync` composable is used to access the PowerSync instance. The `execute` method is used to execute SQL queries,
+- The `useQuery` composable is used to have a live view of a certain SQL query from the database, if the underlying data changes the query will automatically re-execute. It's stored in the `todos` ref.
+- The `newTodo` ref is used to store the text of the new todo.
+- The `todos` ref is automatically updated after adding, updating, or removing todos from the database.
+- The `addTodo`, `updateTodo`, and `removeTodo` methods are used to add, update, and remove todos from the database, respectively.
+- The `useRouter` composable is used to navigate between routes. If the user is not logged in, they are redirected to the login page.
 
 ### 4.9. Go to Login.vue and Register.vue and uncomment the commented code and code blocks
 
