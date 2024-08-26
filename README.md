@@ -56,7 +56,7 @@ create publication powersync for table public.todos
 
    - Navigate to the PowerSync dashboard Project tree.
    - Click on "Create new instance".
-     
+
      <img width="296" alt="project-tree" src="https://github.com/powersync-ja/vue-supabase-todolist-template/assets/19345049/a8c920c2-c22a-4ef4-b882-6485f409dca5">
    - Provide a name for your instance, e.g., "Supabase Testing".
 
@@ -367,13 +367,15 @@ In the folder named `plugins` in the `src` directory, create a file named `power
 ```typescript
 // src/plugins/powersync.ts
 import { AppSchema } from "../library/AppSchema.ts";
-import { WASQLitePowerSyncDatabaseOpenFactory } from "@powersync/web";
+import { PowerSyncDatabase } from "@powersync/web";
 import { createPowerSyncPlugin } from "@powersync/vue";
 
-export const powerSync = new WASQLitePowerSyncDatabaseOpenFactory({
-  dbFilename: "vue-todo.db",
+export const powerSync = new PowerSyncDatabase({
+  database: {
+    dbFilename: "vue-todo.db"
+  },
   schema: AppSchema,
-}).getInstance();
+});
 
 export const powerSyncPlugin = createPowerSyncPlugin({ database: powerSync });
 ```
